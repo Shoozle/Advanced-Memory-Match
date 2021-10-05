@@ -1,5 +1,5 @@
 const tilesArea = document.querySelector('.tilesarea');
-let lives = 4;
+let lives = 6;
 let difficulty = 16;
 let wins = localStorage.getItem('wins') || 0;
 let losses = localStorage.getItem('losses') || 0;
@@ -7,6 +7,33 @@ let losses = localStorage.getItem('losses') || 0;
 const livesText = document.querySelector('.lives')
 const winsText = document.querySelector('.wins')
 const lossesText = document.querySelector('.losses')
+
+easyDif = document.querySelector('.easy').addEventListener('click', () => {
+    let easyMode = confirm("Switch to Easy Difficulty?");
+    if (easyMode) {
+        difficulty = 12;
+        lives = 6;
+        resetCards();
+    }
+})
+
+medDif = document.querySelector('.medium').addEventListener('click', () => {
+    let medMode = confirm("Switch to Medium Difficulty?");
+    if (medMode) {
+        difficulty = 16;
+        lives = 6;
+        resetCards();
+    }
+})
+
+hardDif = document.querySelector('.hard').addEventListener('click', () => {
+    let hardMode = confirm("Switch to Hard Difficulty?");
+    if (hardMode) {
+        difficulty = 20;
+        lives = 6;
+        resetCards();
+    }
+})
 
 winsText.textContent = wins;
 livesText.textContent = lives;
@@ -124,9 +151,10 @@ const checkCards = (e) => {
         }, 250);
     }
     
-    if (toggledCards.length === 16) {
+    if (toggledCards.length === difficulty) {
         setTimeout(() => {
             youWin();  
+            resetCards();
         }, 250);
     }
 }
