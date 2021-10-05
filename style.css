@@ -28,42 +28,43 @@ body {
     gap: 1rem;
     perspective: 2000px;
     padding-top: 3rem;
-  }
+}
   
-  .card {
+.card {
     position: relative;
     border-radius: 20px;
     transform-style: preserve-3d;
-    transition: .4s ease;
-  }
+    transition: all .5s ease;
+    box-shadow: 0 0 2px black;
+}
   
-  .card:hover {
+.card:hover {
     cursor: pointer;
-  }
+    box-shadow: 0 0 4px white;
+}
   
-  .togglecard {
+.toggled {
     transform: rotateY(180deg); 
-  }
+}
   
-  .card img {
+.card img {
     border-radius: 20px;
-  }
+}
   
-  .face, .back {
+.face, .back {
     position: absolute;
     width: 100%;
     height: 100%;
     pointer-events: none;
-  }
+}
   
-  .face {
+.face {
     transform: rotateY(180deg);
-  }
+}
   
-  .back {
+.back {
     background: rgb(127,127,163);
     background: linear-gradient(125deg, rgba(127,127,163,1) 0%, rgba(78,53,91,1) 100%);
     border-radius: 20px;
-    backface-visibility: hidden;
-    
-  }
+    backface-visibility: hidden;    
+}

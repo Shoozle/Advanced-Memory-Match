@@ -1,8 +1,8 @@
 const tilesArea = document.querySelector('.tilesarea');
-let lives = 1;
+let lives = 4;
 let difficulty = 16;
-let wins = 0;
-let losses = 0;
+let wins = localStorage.getItem('wins') || 0;
+let losses = localStorage.getItem('losses') || 0;
 
 const livesText = document.querySelector('.lives')
 const winsText = document.querySelector('.wins')
@@ -69,16 +69,22 @@ const displayCards = () => {
 const youWin = () => {
     alert('YOU WIN');
     wins++;
+    localStorage.setItem('wins', wins)
+    winsText.textContent = wins;
 }
 
 const youLose = () => {
     alert('YOU DIED');
     losses++;
+    localStorage.setItem('losses', losses)
+    lossesText.textContent = losses;
 }
 
 const resetCards = () => {
     tilesArea.querySelectorAll('*').forEach(n => n.remove());
     displayCards();
+    lives = 5;
+    livesText.textContent = lives;
 }
 
 const checkCards = (e) => {
