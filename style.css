@@ -61,7 +61,8 @@ body {
   }
   
   .back {
-    background-color: white;
+    background: rgb(127,127,163);
+    background: linear-gradient(125deg, rgba(127,127,163,1) 0%, rgba(78,53,91,1) 100%);
     border-radius: 20px;
     backface-visibility: hidden;
     

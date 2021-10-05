@@ -29,29 +29,44 @@ const shuffle = (array) => {
     return array;
 }
 
-const makeCard = () => {
-
+const makeCard = (cardItem) => {
+    const card = document.createElement(`div`);
+    const face = document.createElement(`img`);
+    const back = document.createElement(`div`);
+    card.classList = 'card';
+    face.classList = 'face';
+    back.classList = 'back';
+    face.src=cardItem.imgSrc;
+    card.setAttribute('name', cardItem.name);
+    card.appendChild(face);
+    card.appendChild(back);
+    card.addEventListener('click', (e) => {
+        card.classList.toggle('togglecard');
+        checkCards(e)
+    })
+    return card;
 }
 
 const displayCards = () => {
     const cardData = shuffle(getData());
     cardData.forEach(cardItem => {
-        const card = document.createElement(`div`);
-        const face = document.createElement(`img`);
-        const back = document.createElement(`div`);
-        card.classList = 'card';
-        face.classList = 'face';
-        back.classList = 'back';
-        face.src=cardItem.imgSrc;
-        card.setAttribute('name', cardItem.name);
+        const card = makeCard(cardItem)
         tilesArea.appendChild(card);
-        card.appendChild(face);
-        card.appendChild(back);
-        card.addEventListener('click', (e) => {
-            card.classList.toggle('togglecard');
-            checkCards(e);
-        })
     })
+}
+
+const youWin = () => {
+    alert('YOU WIN');
+    wins++;
+}
+
+const checkCards = (e) => {
+    const toggledCards = document.querySelectorAll('.togglecard');
+    if (toggledCards.length === 3) {
+        setTimeout(() => {
+            youWin();  
+        }, 250);
+    }
 }
 
 displayCards();
