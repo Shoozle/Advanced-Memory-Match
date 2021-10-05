@@ -1,8 +1,16 @@
 const tilesArea = document.querySelector('.tilesarea');
-let lives = 5;
+let lives = 1;
 let difficulty = 16;
 let wins = 0;
 let losses = 0;
+
+const livesText = document.querySelector('.lives')
+const winsText = document.querySelector('.wins')
+const lossesText = document.querySelector('.losses')
+
+winsText.textContent = wins;
+livesText.textContent = lives;
+lossesText.textContent = losses;
 
 const getData = () => {
     const cards = [];
@@ -41,8 +49,11 @@ const makeCard = (cardItem) => {
     card.appendChild(face);
     card.appendChild(back);
     card.addEventListener('click', (e) => {
-        card.classList.toggle('togglecard');
-        checkCards(e)
+            if (!card.classList.contains('toggled')) {
+                card.classList.toggle('toggled');
+                checkCards(e)
+            }
+
     })
     return card;
 }
@@ -60,9 +71,54 @@ const youWin = () => {
     wins++;
 }
 
+const youLose = () => {
+    alert('YOU DIED');
+    losses++;
+}
+
+const resetCards = () => {
+    tilesArea.querySelectorAll('*').forEach(n => n.remove());
+    displayCards();
+}
+
 const checkCards = (e) => {
-    const toggledCards = document.querySelectorAll('.togglecard');
-    if (toggledCards.length === 3) {
+    const clickedCard = e.target;
+    clickedCard.classList.add('flipped')
+    const toggledCards = document.querySelectorAll('.toggled');
+    const flippedCards = document.querySelectorAll('.flipped');
+
+    console.log(flippedCards)
+
+    if (flippedCards.length === 2) {
+        if (flippedCards[0].getAttribute('name') === flippedCards[1].getAttribute('name')) {
+            console.log('MATCH FOUND')
+            flippedCards.forEach(card => {
+                card.classList.remove('flipped');
+                card.style.pointerEvents = 'none';
+            })
+        } else {
+            console.log('MATCH NOT FOUND')
+            flippedCards.forEach(card => {
+                setTimeout(() => {
+                    card.classList.remove('toggled');
+                    card.classList.remove('flipped');
+                }, 500);
+            })
+            lives--;
+            livesText.textContent = lives;  
+        }
+    }
+
+    console.log(e.target)
+
+    if (lives <= 0) {
+        setTimeout(() => {
+            youLose();
+            resetCards();  
+        }, 250);
+    }
+    
+    if (toggledCards.length === 16) {
         setTimeout(() => {
             youWin();  
         }, 250);
