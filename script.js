@@ -12,7 +12,6 @@ easyDif = document.querySelector('.easy').addEventListener('click', () => {
     let easyMode = confirm("Switch to Easy Difficulty?");
     if (easyMode) {
         difficulty = 12;
-        lives = 6;
         resetCards();
     }
 })
@@ -21,7 +20,6 @@ medDif = document.querySelector('.medium').addEventListener('click', () => {
     let medMode = confirm("Switch to Medium Difficulty?");
     if (medMode) {
         difficulty = 16;
-        lives = 6;
         resetCards();
     }
 })
@@ -30,7 +28,6 @@ hardDif = document.querySelector('.hard').addEventListener('click', () => {
     let hardMode = confirm("Switch to Hard Difficulty?");
     if (hardMode) {
         difficulty = 20;
-        lives = 6;
         resetCards();
     }
 })
@@ -110,7 +107,7 @@ const youLose = () => {
 const resetCards = () => {
     tilesArea.querySelectorAll('*').forEach(n => n.remove());
     displayCards();
-    lives = 5;
+    lives = 6;
     livesText.textContent = lives;
 }
 
