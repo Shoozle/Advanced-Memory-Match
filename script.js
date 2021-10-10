@@ -4,9 +4,18 @@ let difficulty = 16;
 let wins = localStorage.getItem('wins') || 0;
 let losses = localStorage.getItem('losses') || 0;
 
-const livesText = document.querySelector('.lives')
-const winsText = document.querySelector('.wins')
-const lossesText = document.querySelector('.losses')
+const livesText = document.querySelector('.lives');
+const winsText = document.querySelector('.wins');
+const lossesText = document.querySelector('.losses');
+
+const buttons = document.querySelectorAll('button');
+console.log(buttons)
+
+buttons.forEach(btn => btn.addEventListener('click', (e) => {
+    buttons.forEach(btn => btn.classList.remove('active'))
+    e.target.classList.add('active');
+    console.log(e)
+}))
 
 easyDif = document.querySelector('.easy').addEventListener('click', () => {
     let easyMode = confirm("Switch to Easy Difficulty?");

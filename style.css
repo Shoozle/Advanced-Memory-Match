@@ -11,7 +11,7 @@
 html, body {
     background-color: darkslategray;
     color: white;
-    font: 1rem 'Arial';
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
@@ -23,11 +23,12 @@ body {
 
 .tilesarea{
     display: grid;
-    grid-template-columns: repeat(4, minmax(80px, 140px));
-    grid-template-rows: repeat(5, minmax(80px, 200px));
+    grid-template-columns: repeat(4, minmax(30px, 133px));
+    grid-template-rows: repeat(5, minmax(30px, 175px));
     gap: 1rem;
     perspective: 2000px;
-    padding-top: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
   
 .card {
@@ -67,4 +68,70 @@ body {
     background: linear-gradient(125deg, rgba(127,127,163,1) 0%, rgba(78,53,91,1) 100%);
     border-radius: 20px;
     backface-visibility: hidden;    
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.buttons {
+    margin: 1.5rem;
+    display: flex;
+}
+.buttons button {
+    background-color: transparent;
+    border: 1px solid black;
+    outline: none;
+    color: white;
+    margin: 0 1.5rem;
+    font-size: 1.7rem;
+    padding: .7rem 1rem;
+    cursor: pointer;
+    transition: all .2s;
+}
+.buttons button:hover {
+    background-color: rgb(127,127,163);
+    color: black;
+}
+
+.buttons button.active {
+    background-color: rgb(127,127,163);
+}
+
+h2 {
+    
+}
+
+span {
+    font-size: 1.6rem;
+    margin: 0 .3rem;
+}
+
+@media screen and (max-height: 1200px) {
+    .tilesarea {
+        grid-template-columns: repeat(4, minmax(30px, 95px));
+        grid-template-rows: repeat(5, minmax(30px, 125px));
+    }
+}
+
+@media screen and (max-height: 860px) {
+    .tilesarea {
+        grid-template-columns: repeat(4, minmax(30px, 49px));
+        grid-template-rows: repeat(5, minmax(30px, 66px));
+    }
+    .card, .face, .back, .card img {
+        border-radius: 5px;
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .tilesarea {
+        grid-template-columns: repeat(4, minmax(30px, 49px));
+        grid-template-rows: repeat(5, minmax(30px, 66px));
+    }
+    .card, .face, .back, .card img {
+        border-radius: 5px;
+        box-shadow: none;
+    }
 }
