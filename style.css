@@ -96,10 +96,7 @@ h1 {
 
 .buttons button.active {
     background-color: rgb(127,127,163);
-}
-
-h2 {
-    
+    color: black;
 }
 
 span {

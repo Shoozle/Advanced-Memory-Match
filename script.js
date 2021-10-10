@@ -1,6 +1,23 @@
 const tilesArea = document.querySelector('.tilesarea');
-let lives = 6;
-let difficulty = 16;
+let curLives = 6;
+let curDiff = 1;
+const difficulty = [
+    {
+        name: 'easy',
+        lives: 6,
+        tiles: 12
+    },
+    {
+        name: 'medium',
+        lives: 7,
+        tiles: 16
+    },
+    {
+        name: 'hard',
+        lives: 8,
+        tiles: 20
+    }
+]
 let wins = localStorage.getItem('wins') || 0;
 let losses = localStorage.getItem('losses') || 0;
 
@@ -14,13 +31,12 @@ console.log(buttons)
 buttons.forEach(btn => btn.addEventListener('click', (e) => {
     buttons.forEach(btn => btn.classList.remove('active'))
     e.target.classList.add('active');
-    console.log(e)
 }))
 
 easyDif = document.querySelector('.easy').addEventListener('click', () => {
     let easyMode = confirm("Switch to Easy Difficulty?");
     if (easyMode) {
-        difficulty = 12;
+        curDiff = 0;
         resetCards();
     }
 })
@@ -28,7 +44,7 @@ easyDif = document.querySelector('.easy').addEventListener('click', () => {
 medDif = document.querySelector('.medium').addEventListener('click', () => {
     let medMode = confirm("Switch to Medium Difficulty?");
     if (medMode) {
-        difficulty = 16;
+        curDiff = 1;
         resetCards();
     }
 })
@@ -36,18 +52,18 @@ medDif = document.querySelector('.medium').addEventListener('click', () => {
 hardDif = document.querySelector('.hard').addEventListener('click', () => {
     let hardMode = confirm("Switch to Hard Difficulty?");
     if (hardMode) {
-        difficulty = 20;
+        curDiff = 2;
         resetCards();
     }
 })
 
 winsText.textContent = wins;
-livesText.textContent = lives;
+livesText.textContent = curLives;
 lossesText.textContent = losses;
 
 const getData = () => {
     const cards = [];
-    for (let i=0; i<difficulty / 2; i++){
+    for (let i = 0; i < difficulty[curDiff].tiles / 2; i++) {
         cards.push({
             imgSrc: `./img/tile${i}.jpg`, name: `${i}`
         })
@@ -62,7 +78,7 @@ const getData = () => {
 const shuffle = (array) => {
     let m = array.length, t, i;
     while (m) {
-        i = Math.floor(Math.random() * m--); 
+        i = Math.floor(Math.random() * m--);
         t = array[m];
         array[m] = array[i];
         array[i] = t;
@@ -77,15 +93,15 @@ const makeCard = (cardItem) => {
     card.classList = 'card';
     face.classList = 'face';
     back.classList = 'back';
-    face.src=cardItem.imgSrc;
+    face.src = cardItem.imgSrc;
     card.setAttribute('name', cardItem.name);
     card.appendChild(face);
     card.appendChild(back);
     card.addEventListener('click', (e) => {
-            if (!card.classList.contains('toggled')) {
-                card.classList.toggle('toggled');
-                checkCards(e)
-            }
+        if (!card.classList.contains('toggled')) {
+            card.classList.toggle('toggled');
+            checkCards(e)
+        }
 
     })
     return card;
@@ -100,14 +116,14 @@ const displayCards = () => {
 }
 
 const youWin = () => {
-    alert('YOU WIN');
+    alert('Congrats, you are the best gamer!');
     wins++;
     localStorage.setItem('wins', wins)
     winsText.textContent = wins;
 }
 
 const youLose = () => {
-    alert('YOU DIED');
+    alert('Game over! Please try again!');
     losses++;
     localStorage.setItem('losses', losses)
     lossesText.textContent = losses;
@@ -116,8 +132,8 @@ const youLose = () => {
 const resetCards = () => {
     tilesArea.querySelectorAll('*').forEach(n => n.remove());
     displayCards();
-    lives = 6;
-    livesText.textContent = lives;
+    curLives = difficulty[curDiff].lives;
+    livesText.textContent = curLives;
 }
 
 const checkCards = (e) => {
@@ -130,36 +146,32 @@ const checkCards = (e) => {
 
     if (flippedCards.length === 2) {
         if (flippedCards[0].getAttribute('name') === flippedCards[1].getAttribute('name')) {
-            console.log('MATCH FOUND')
             flippedCards.forEach(card => {
                 card.classList.remove('flipped');
                 card.style.pointerEvents = 'none';
             })
         } else {
-            console.log('MATCH NOT FOUND')
             flippedCards.forEach(card => {
                 setTimeout(() => {
                     card.classList.remove('toggled');
                     card.classList.remove('flipped');
                 }, 500);
             })
-            lives--;
-            livesText.textContent = lives;  
+            curLives--;
+            livesText.textContent = curLives;
         }
     }
 
-    console.log(e.target)
-
-    if (lives <= 0) {
+    if (curLives <= 0) {
         setTimeout(() => {
             youLose();
-            resetCards();  
+            resetCards();
         }, 250);
     }
-    
+
     if (toggledCards.length === difficulty) {
         setTimeout(() => {
-            youWin();  
+            youWin();
             resetCards();
         }, 250);
     }
