@@ -169,7 +169,7 @@ const checkCards = (e) => {
         }, 250);
     }
 
-    if (toggledCards.length === difficulty) {
+    if (toggledCards.length === difficulty[curDiff].tiles) {
         setTimeout(() => {
             youWin();
             resetCards();
